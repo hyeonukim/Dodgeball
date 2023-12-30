@@ -6,6 +6,8 @@
 #include "DrawDebugHelpers.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
+#include "DodgeballProjectile.h"
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -18,10 +20,10 @@ AEnemyCharacter::AEnemyCharacter()
 
 }
 
-void AEnemyCharacter::LookAtActor(AActor* TargetActor)
+bool AEnemyCharacter::LookAtActor(AActor* TargetActor)
 {
 	if (TargetActor == nullptr) {
-		return;
+		return false;
 	}
 
 	if (CanSeeActor(TargetActor)) {
@@ -30,7 +32,11 @@ void AEnemyCharacter::LookAtActor(AActor* TargetActor)
 
 		FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(Start, End);
 		SetActorRotation(LookAtRotation);
+
+		return true;
 	}
+
+	return false;
 }
 
 bool AEnemyCharacter::CanSeeActor(const AActor* TargetActor) const
@@ -65,12 +71,38 @@ void AEnemyCharacter::BeginPlay()
 	
 }
 
+void AEnemyCharacter::ThrowDodgeball()
+{
+	if (DodgeballClass == nullptr) {
+		return;
+	}
+
+	FVector ForwardVector = GetActorForwardVector();
+	float SpawnDistance = 40.f;
+	FVector SpawnLocation = GetActorLocation() + (ForwardVector * SpawnDistance);
+
+	GetWorld()->SpawnActor<ADodgeballProjectile>(DodgeballClass, SpawnLocation, GetActorRotation());
+}
+
 // Called every frame
 void AEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(this, 0);
-	LookAtActor(PlayerCharacter);
+	bCanSeePlayer = LookAtActor(PlayerCharacter);
+
+	if (bCanSeePlayer != bPreviousCanSeePlayer) {
+		if (bCanSeePlayer) {
+			//throw dodgeball
+			GetWorldTimerManager().SetTimer(ThrowTimerHandle, this, &AEnemyCharacter::ThrowDodgeball, ThrowingInterval, true, ThrowingDelay);
+		}
+		else {
+			//stop throw dodgeball
+			GetWorldTimerManager().ClearTimer(ThrowTimerHandle);
+		}
+	}
+
+	bPreviousCanSeePlayer = bCanSeePlayer;
 }
 
 // Called to bind functionality to input

@@ -3,6 +3,7 @@
 
 #include "DodgeballProjectile.h"
 #include "Components/SphereComponent.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 #include "DodgeballCharacter.h"
 
 // Sets default values
@@ -20,6 +21,9 @@ ADodgeballProjectile::ADodgeballProjectile()
 	SphereComponent->OnComponentHit.AddDynamic(this, &ADodgeballProjectile::OnHit);
 	
 	RootComponent = SphereComponent;
+	
+	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
+	ProjectileMovement->InitialSpeed = 1500.f;
 }
 
 void ADodgeballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OhterActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -33,6 +37,8 @@ void ADodgeballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OhterActo
 void ADodgeballProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+
+	SetLifeSpan(5.f);
 	
 }
 
