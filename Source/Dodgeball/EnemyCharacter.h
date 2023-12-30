@@ -29,8 +29,6 @@ protected:
 
 	bool LookAtActor(AActor* TargetActor);
 
-	bool CanSeeActor(const AActor* TargetActor) const;
-
 	bool bCanSeePlayer = false;
 
 	bool bPreviousCanSeePlayer = false;
