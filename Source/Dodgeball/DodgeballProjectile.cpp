@@ -5,6 +5,7 @@
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "DodgeballCharacter.h"
+#include "HealthComponent.h"
 
 // Sets default values
 ADodgeballProjectile::ADodgeballProjectile()
@@ -26,9 +27,15 @@ ADodgeballProjectile::ADodgeballProjectile()
 	ProjectileMovement->InitialSpeed = 1500.f;
 }
 
-void ADodgeballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OhterActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+void ADodgeballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (Cast<ADodgeballCharacter>(OhterActor) != nullptr) {
+	ADodgeballCharacter* Player = Cast<ADodgeballCharacter>(OtherActor);
+	if (Player != nullptr) {
+		UHealthComponent* HealthComponent = Player->FindComponentByClass<UHealthComponent>();
+
+		if (HealthComponent != nullptr) {
+			HealthComponent->LoseHealth(Damage);
+		}
 		Destroy();
 	}
 }
