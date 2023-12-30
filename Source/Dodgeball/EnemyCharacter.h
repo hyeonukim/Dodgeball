@@ -14,20 +14,16 @@ class DODGEBALL_API AEnemyCharacter : public ACharacter
 private: 
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = LookAt, meta = (AllowPrivateAccess = "true"))
-	class USceneComponent* SightSource;
+	class ULookAtActorComponent* LookAtActorComponent;
 
 public:
 	// Sets default values for this character's properties
 	AEnemyCharacter();
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Dodgeball)
-	TSubclassOf<class ADodgeballProjectile>DodgeballClass;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	bool LookAtActor(AActor* TargetActor);
 
 	bool bCanSeePlayer = false;
 
@@ -41,11 +37,11 @@ protected:
 
 	void ThrowDodgeball();
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Dodgeball)
+	TSubclassOf<class ADodgeballProjectile>DodgeballClass;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 };

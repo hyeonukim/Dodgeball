@@ -3,12 +3,12 @@
 
 #include "EnemyCharacter.h"
 #include "Engine/World.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
 #include "DodgeballProjectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
-#include "DodgeballFunctionLibrary.h"
+#include "LookAtActorComponent.h"
+
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -16,42 +16,18 @@ AEnemyCharacter::AEnemyCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	SightSource = CreateDefaultSubobject<USceneComponent>(TEXT("Sight Source"));
-	SightSource->SetupAttachment(RootComponent);
+	LookAtActorComponent = CreateDefaultSubobject<ULookAtActorComponent>(TEXT("Look At Actor Component"));
+	LookAtActorComponent->SetupAttachment(RootComponent);
 
-}
-
-bool AEnemyCharacter::LookAtActor(AActor* TargetActor)
-{
-	if (TargetActor == nullptr) {
-		return false;
-	}
-
-	const TArray<const AActor*> IgnoreActors = { this, TargetActor };
-
-	if (UDodgeballFunctionLibrary::CanSeeActor(
-		GetWorld(),
-		SightSource->GetComponentLocation(),
-		TargetActor,
-		IgnoreActors)) 
-	{
-		FVector Start = GetActorLocation();
-		FVector End = TargetActor->GetActorLocation();
-
-		FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(Start, End);
-		SetActorRotation(LookAtRotation);
-
-		return true;
-	}
-
-	return false;
 }
 
 // Called when the game starts or when spawned
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(this, 0);
+	LookAtActorComponent->SetTarget(PlayerCharacter);	
 }
 
 void AEnemyCharacter::ThrowDodgeball()
@@ -75,8 +51,8 @@ void AEnemyCharacter::ThrowDodgeball()
 void AEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(this, 0);
-	bCanSeePlayer = LookAtActor(PlayerCharacter);
+
+	bCanSeePlayer = LookAtActorComponent->CanSeeTarget();
 
 	if (bCanSeePlayer != bPreviousCanSeePlayer) {
 		if (bCanSeePlayer) {
@@ -92,10 +68,4 @@ void AEnemyCharacter::Tick(float DeltaTime)
 	bPreviousCanSeePlayer = bCanSeePlayer;
 }
 
-// Called to bind functionality to input
-void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
 
