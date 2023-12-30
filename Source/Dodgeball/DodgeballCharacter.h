@@ -5,20 +5,21 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "HealthInterface.h"
 #include "DodgeballCharacter.generated.h"
 
 UCLASS(config = Game)
-class ADodgeballCharacter : public ACharacter
+class ADodgeballCharacter : public ACharacter, public IHealthInterface
 {
 	GENERATED_BODY()
 
-		/** Camera boom positioning the camera behind the character */
-		UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-		class USpringArmComponent* CameraBoom;
+	/** Camera boom positioning the camera behind the character */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class USpringArmComponent* CameraBoom;
 
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-		class UCameraComponent* FollowCamera;
+	class UCameraComponent* FollowCamera;
 
 private:
 	class UHealthComponent* HealthComponent;
@@ -28,13 +29,15 @@ public:
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Input)
-		float TurnRateGamepad;
+	float TurnRateGamepad;
 
 	UPROPERTY(EditAnywhere, Category = Input)
-		class UInputMappingContext* IC_Character;
+	class UInputMappingContext* IC_Character;
 
 	UPROPERTY(EditAnywhere, Category = Input)
-		class UInputAction* IA_Move;
+	class UInputAction* IA_Move;
+
+	virtual void OnDeath_Implementation() override;
 
 protected:
 

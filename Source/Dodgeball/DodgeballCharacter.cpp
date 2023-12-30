@@ -13,6 +13,7 @@
 #include "InputAction.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "HealthComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -89,6 +90,11 @@ void ADodgeballCharacter::SetupPlayerInputComponent(class UInputComponent* Playe
 
 		EnhancedPlayerInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered, this, &ADodgeballCharacter::Move);
 	}
+}
+
+void ADodgeballCharacter::OnDeath_Implementation()
+{
+	UKismetSystemLibrary::QuitGame(this, nullptr, EQuitPreference::Quit, true);
 }
 
 void ADodgeballCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
