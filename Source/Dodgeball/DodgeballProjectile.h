@@ -40,4 +40,11 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Damage)
 	float Damage = 34.f;
 
+	UPROPERTY(EditAnywhere, Category = Sound)
+	class USoundBase* BounceSound;
+
+	UPROPERTY(EditAnywhere, Category = Sound)
+	class USoundAttenuation* BounceSoundAttenuation;
+
+
 };
