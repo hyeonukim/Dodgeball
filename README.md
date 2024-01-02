@@ -3,17 +3,17 @@
 Testing/Learning how to use UE5 with C++ classes
 A player has to dodge around the enemies' projectiles attempting to finish the maze
 
-##Included C++ Classes
+## Included C++ Classes
 
-###DodgeballCharacter
-####Functions
-__ADodgeballCharacter()__: A function that initializes movement, collision capsule, springarm, camera to make it top down view
+### DodgeballCharacter
+#### Functions
+__ ADodgeballCharacter() __: A function that initializes movement, collision capsule, springarm, camera to make it top down view
 
-__SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)__: A function that takes in inputs of player
+__ SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) __: A function that takes in inputs of player
 
-__OnDeath_Implementation()__:
+__ OnDeath_Implementation() __:
 
-__OnTakeDamage_Implementation()__:
+__ OnTakeDamage_Implementation() __:
 
 ###DodgeballFunction
 
