@@ -13,6 +13,10 @@ void URestartWidget::NativeOnInitialized()
 	if (RestartButton != nullptr) {
 		RestartButton->OnClicked.AddDynamic(this, &URestartWidget::OnRestartClicked);
 	}
+
+	if (ExitButton != nullptr) {
+		ExitButton->OnClicked.AddDynamic(this, &URestartWidget::OnExitClicked);
+	}
 }
 
 void URestartWidget::OnRestartClicked()
@@ -23,4 +27,9 @@ void URestartWidget::OnRestartClicked()
 	if (PlayerController != nullptr) {
 		PlayerController->HideRestartWidget();
 	}
+}
+
+void URestartWidget::OnExitClicked()
+{
+	UKismetSystemLibrary::QuitGame(GetWorld(), nullptr, EQuitPreference::Quit, true);
 }

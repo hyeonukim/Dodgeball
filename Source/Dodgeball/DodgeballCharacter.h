@@ -39,6 +39,8 @@ public:
 
 	virtual void OnDeath_Implementation() override;
 
+	virtual void OnTakeDamage_Implementation() override;
+
 protected:
 
 	/** Handler for when a touch input begins. */

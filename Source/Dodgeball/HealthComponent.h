@@ -18,6 +18,8 @@ public:
 
 	void LoseHealth(float Amount);
 
+	FORCEINLINE float GetHealthPercent() const { return Health / 100.f; }
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

@@ -102,6 +102,15 @@ void ADodgeballCharacter::OnDeath_Implementation()
 	}
 }
 
+void ADodgeballCharacter::OnTakeDamage_Implementation()
+{
+	ADodgeballPlayerController* PlayerController = Cast<ADodgeballPlayerController>(GetController());
+
+	if (PlayerController != nullptr) {
+		PlayerController->UpdateHealthPercent(HealthComponent->GetHealthPercent());
+	}
+}
+
 void ADodgeballCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	Jump();

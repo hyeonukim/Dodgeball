@@ -18,12 +18,24 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class URestartWidget> BP_RestartWidget;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class UHUDWidget> BP_HUDWidget;
+	
 	void ShowRestartWidget();
 
 	void HideRestartWidget();
 
+	void UpdateHealthPercent(float HealthPercent);
+
+
 private:
 	UPROPERTY()
 	class URestartWidget* RestartWidget;
+
+	UPROPERTY()
+	class UHUDWidget* HUDWidget;
+
+protected:
+	virtual void BeginPlay() override;
 	
 };
