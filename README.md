@@ -7,13 +7,13 @@ A player has to dodge around the enemies' projectiles attempting to finish the m
 
 ### DodgeballCharacter
 #### Functions
-__ ADodgeballCharacter() __: A function that initializes movement, collision capsule, springarm, camera to make it top down view
+**ADodgeballCharacter()**: A function that initializes movement, collision capsule, springarm, camera to make it top down view
 
-__ SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) __: A function that takes in inputs of player
+**SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)**: A function that takes in inputs of player
 
-__ OnDeath_Implementation() __:
+**OnDeath_Implementation()**:
 
-__ OnTakeDamage_Implementation() __:
+**OnTakeDamage_Implementation()**:
 
 ###DodgeballFunction
 
