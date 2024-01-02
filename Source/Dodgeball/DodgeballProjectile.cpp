@@ -30,6 +30,10 @@ ADodgeballProjectile::ADodgeballProjectile()
 
 void ADodgeballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
+	if (BounceSound != nullptr && NormalImpulse.Size() > 600.f) {
+		UGameplayStatics::PlaySoundAtLocation(this, BounceSound, GetActorLocation(), 1.0f, 1.0f, 0.0f, BounceSoundAttenuation);
+	}
+
 	ADodgeballCharacter* Player = Cast<ADodgeballCharacter>(OtherActor);
 	if (Player != nullptr) {
 		UHealthComponent* HealthComponent = Player->FindComponentByClass<UHealthComponent>();
@@ -37,11 +41,15 @@ void ADodgeballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActo
 		if (HealthComponent != nullptr) {
 			HealthComponent->LoseHealth(Damage);
 		}
-		Destroy();
-	}
 
-	if (BounceSound != nullptr && NormalImpulse.Size() > 600.f) {
-		UGameplayStatics::PlaySoundAtLocation(this, BounceSound, GetActorLocation(), 1.0f, 1.0f, 0.0f, BounceSoundAttenuation);
+		if (DamageSound != nullptr) {
+			UGameplayStatics::PlaySoundAtLocation(this, DamageSound, GetActorLocation());
+		}
+
+		if (HitParticles != nullptr) {
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitParticles, GetActorTransform());
+		}
+		Destroy();
 	}
 }
 
