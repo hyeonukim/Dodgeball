@@ -18,6 +18,7 @@ _**Move()**_: A function that allows players to move with given input
 
 ## DodgeballFunctionLibrary
 This serves as a function library so both Player and Enemy can use if they wish to
+
 _**bool CanSeeActor(UWorld World, FVector Location, AActor TargetActor, TArray<AActor>  IgnoreActors)**_:
   World: current world that actor is in
   Location: Start of the projectile
@@ -28,7 +29,7 @@ _**bool CanSeeActor(UWorld World, FVector Location, AActor TargetActor, TArray<A
 ## DodgeballGameMode
 Child class of a build in GameMode class
 
-##DodgeballProjectile
+## DodgeballProjectile
 A projecile that can do damage
 
 _**ADodgeballProjectile()**_: initializes the sphere collider, and speed of the projectile
