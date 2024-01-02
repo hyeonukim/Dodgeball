@@ -20,10 +20,15 @@ _**Move()**_: A function that allows players to move with given input
 This serves as a function library so both Player and Enemy can use if they wish to
 
 _**bool CanSeeActor(UWorld World, FVector Location, AActor TargetActor, TArray<AActor>  IgnoreActors)**_:
+
   World: current world that actor is in
+  
   Location: Start of the projectile
+  
   TargetActor: A target character/object
+  
   IgnoreActors: Actors that should be ignored that comes between start to end point
+  
   The function returns true if Owner of the function is able to see a target
   
 ## DodgeballGameMode
