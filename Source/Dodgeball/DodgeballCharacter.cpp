@@ -14,6 +14,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "HealthComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "DodgeballPlayerController.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -94,7 +95,11 @@ void ADodgeballCharacter::SetupPlayerInputComponent(class UInputComponent* Playe
 
 void ADodgeballCharacter::OnDeath_Implementation()
 {
-	UKismetSystemLibrary::QuitGame(this, nullptr, EQuitPreference::Quit, true);
+	ADodgeballPlayerController* PlayerController = Cast<ADodgeballPlayerController>(GetController());
+
+	if (PlayerController != nullptr) {
+		PlayerController->ShowRestartWidget();
+	}
 }
 
 void ADodgeballCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
