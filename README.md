@@ -16,7 +16,7 @@ This class is a child of built in Character class player gets to control this cl
 
 **Move()**: A function that allows players to move with given input
 
-##DodgeballFunctionLibrary
+## DodgeballFunctionLibrary
 This serves as a function library so both Player and Enemy can use if they wish to
 **bool CanSeeActor(UWorld World, FVector Location, AActor TargetActor, TArray<AActor>  IgnoreActors)**:
   World: current world that actor is in
@@ -25,7 +25,7 @@ This serves as a function library so both Player and Enemy can use if they wish 
   IgnoreActors: Actors that should be ignored that comes between start to end point
   The function returns true if Owner of the function is able to see a target
   
-##DodgeballGameMode
+## DodgeballGameMode
 Child class of a build in GameMode class
 
 ##DodgeballProjectile
@@ -37,7 +37,7 @@ A projecile that can do damage
 
 **BeginPlay()**: sets the lifespan of the projectile to be 5s
 
-##EnemyCharacter
+## EnemyCharacter
 This codes is a child class of built in Character class that controls the Enemy, and Enemy looks for the target, rotates the orientation, then shoots the projectile
 
 **AEnemyCharacter()**: Initializes the eyes (where the projectile shoots from)
@@ -48,31 +48,31 @@ This codes is a child class of built in Character class that controls the Enemy,
 
 **Tick()**: Every frame, track the player to where it is, and update if enemy can see the target
 
-##HealthComponent
+## HealthComponent
 This tracks the HP of the player and functions around it such as losing health
 
 **LoseHealth(float Amount)**:
   Amount: amount that loses health
   the function makes whoever calls the function lose health
 
-##HealthInterface
+## HealthInterface
 This is an Interface, meaning that other script is able to use this. 
 It has all the Health point related Interface such as OnDeath(), OnTakeDamage() the implementation of these are in 'DodgeballCharacter'
 
-##HUDWidget
+## HUDWidget
 This updates the HP bar of the character
 
 **UpdateHealthPercent(float HealthPercent)**: updates the UI of health bar
 
-##LookAtActorComponent
+## LookAtActorComponent
 This class is a component which 'EnemyCharacter' has, it acts as an eye
 
 **LookAtActor()**: this function calls the 'CanSeeActor' from the eye of the enemy
 
-##MusicManager
+## MusicManager
 Manages background music of the game
 
-##RestartWidget
+## RestartWidget
 This class is an UI once player dies, it allows player to restart or exit out of the game
 
 **NativeOnInitialized()**: it initializes clickable buttons 
@@ -81,7 +81,7 @@ This class is an UI once player dies, it allows player to restart or exit out of
 
 **OnExitClicked()**: once player clicks on quit, the game exits
 
-##VictoryBox
+## VictoryBox
 This class acts as a goal that player must reach to
 
 **AVictoryBox()**: initalizes goal point, and the collision box
@@ -89,5 +89,5 @@ This class acts as a goal that player must reach to
 **OnBeginOverlap(UPrimitiveComponent OverlappedComp, AActor OtherActor, UPrimitiveComponent OtherComp, int32 OhterBodyIndex, bool bFromSweep, const FHitResult& SweepResult)**:
   On overlap of a player, the game ends
 
-##Wall
+## Wall
 Class that is a child of an built in Actor class, all its purpose is just a wall
