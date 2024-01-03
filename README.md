@@ -3,7 +3,21 @@
 Testing/Learning how to use UE5 with C++ classes
 A player has to dodge around the enemies' projectiles attempting to finish the maze
 
-## Contents
+## Table of Contents
+
+- [ADodgeballCharacter](#ADodgeballCharacter)
+- [UDodgeballFunctionLibrary](#UDodgeballFunctionLibrary)
+- [ADodgeballGameMode](#ADodgeballGameMode)
+- [ADodgeballPlayerController](#ADodgeballPlayerController)
+- [ADodgeballProjectile](#ADodgeballProjectile)
+- [AEnemyCharacter](#AEnemyCharacter)
+- [UHUDWidget](#UHUDWidget)
+- [UHealthComponent](#UHealthComponent)
+- [UHealthInterface](#UHealthInterface)
+- [ULookAtActorComponent](#ULookAtActorComponent)
+- [AMusicManager](#AMusicManager)
+- [AVictoryBox](#AVictoryBox)
+- [AWall](#AWall)
 
 ## ADodgeballCharacter
 - **Description**: Represents the main character in the Dodgeball game, incorporating camera components, input handling, and health management.
