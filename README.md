@@ -3,97 +3,74 @@
 Testing/Learning how to use UE5 with C++ classes
 A player has to dodge around the enemies' projectiles attempting to finish the maze
 
-## DodgeballCharacter
-This class is a child of built in Character class player gets to control this class
+## Contents
 
-_**ADodgeballCharacter()**_: A function that initializes movement, collision capsule, springarm, camera to make it top down view
+## ADodgeballCharacter
+- **Description**: Represents the main character in the Dodgeball game, incorporating camera components, input handling, and health management.
+- **Usage**: Controls the player's character movement, camera positioning, and interacts with the game environment.
+- **Implementation**: Inherits from ACharacter and IHealthInterface, utilizes camera components, and includes methods for handling input, health events, and setup.
 
-_**SetupPlayerInputComponent(PlayerInputComponent)**_: A function that takes in inputs of player
+## UDodgeballFunctionLibrary
+- **Description**: Provides a utility library function for checking if an actor is visible from a specific location in the game world.
+- **Usage**: Used for determining line of sight between actors in the game, such as checking if an enemy character can see the player character.
+- **Implementation**: Static function within the UDodgeballFunctionLibrary class, taking the world, location, target actor, and optional array of ignore actors as parameters.
 
-_**OnDeath_Implementation()**_: Once a player dies, this function calls a restart UI
+## ADodgeballGameMode
+- **Description**: Manages the game environment setup and various aspects of the game mode.
+- **Usage**: Configures initial game state, sets up necessary components, and handles game-specific logic.
+- **Implementation**: Inherits from AGameModeBase and includes methods for initialization and game mode-specific functionality.
 
-_**OnTakeDamage_Implementation()**_: Once a player takes damage, this function updates the HUD for player HP
+## ADodgeballPlayerController
+- **Description**: Handles player input, manages HUD widgets, and controls the overall game flow.
+- **Usage**: Listens for player input, updates the HUD, and communicates with other game components.
+- **Implementation**: Inherits from APlayerController and includes methods for showing/hiding widgets, updating health, and responding to player input.
 
-_**Move()**_: A function that allows players to move with given input
+## ADodgeballProjectile
+- **Description**: Defines the Dodgeball projectile, including movement, collision, and impact effects.
+- **Usage**: Represents the throwable object in the game, handling collisions and interactions with other actors.
+- **Implementation**: Inherits from AActor and includes components for sphere collision, projectile movement, and methods for handling hits and impact effects.
 
-## DodgeballFunctionLibrary
-This serves as a function library so both Player and Enemy can use if they wish to
+## AEnemyCharacter
+- **Description**: Enemy character capable of throwing Dodgeball projectiles at the player.
+- **Usage**: Represents an AI-controlled enemy with the ability to attack the player.
+- **Implementation**: Inherits from ACharacter, includes a LookAtActorComponent for targeting, and handles throwing Dodgeball projectiles at intervals.
 
-_**bool CanSeeActor(UWorld World, FVector Location, AActor TargetActor, TArray<AActor>  IgnoreActors)**_:
+## UHUDWidget
+- **Description**: User interface widget displaying the player's health using a progress bar.
+- **Usage**: Provides a visual representation of the player's health on the screen.
+- **Implementation**: Inherits from UUserWidget and includes a progress bar for health display and a method for updating the health percentage.
 
-  World: current world that actor is in
-  
-  Location: Start of the projectile
-  
-  TargetActor: A target character/object
-  
-  IgnoreActors: Actors that should be ignored that comes between start to end point
-  
-  The function returns true if Owner of the function is able to see a target
-  
-## DodgeballGameMode
-Child class of a build in GameMode class
+## UHealthComponent
+- **Description**: Manages the health of an actor, allowing it to take damage and trigger events on death.
+- **Usage**: Attached to actors that need health management, such as the main character or enemies.
+- **Implementation**: Inherits from UActorComponent and includes methods for losing health, getting health percentage, and handling events on death.
 
-## DodgeballProjectile
-A projecile that can do damage
+## UHealthInterface
+- **Description**: Interface defining methods for handling health-related events.
+- **Usage**: Implemented by classes that can take damage and die, ensuring a consistent way to handle health events.
+- **Implementation**: Consists of two BlueprintNativeEvent methods - OnDeath and OnTakeDamage - to be implemented by classes that implement the interface.
 
-_**ADodgeballProjectile()**_: initializes the sphere collider, and speed of the projectile
+## ULookAtActorComponent
+- **Description**: Scene component allowing an actor to focus on another actor and determine if it can see the target.
+- **Usage**: Attached to actors that need to focus on specific targets or check line of sight.
+- **Implementation**: Inherits from USceneComponent and includes methods for setting the target actor and determining if the target is visible.
 
-_**OnHit(UPrimitiveComopnent HitComponent, AActor OtherActor, UPrimitiveComponent OtherComp, FVector NormalImpulse, FHitResult Hit)**_: This function allows onhit detection for projectile, and once it hits the player, player loses hp and plays sound with particles
+## AMusicManager
+- **Description**: Manages background music in the game.
+- **Usage**: Provides a centralized system for controlling and playing background music tracks.
+- **Implementation**: Inherits from AActor and includes an AudioComponent for playing music.
 
-_**BeginPlay()**_: sets the lifespan of the projectile to be 5s
+## URestartWidget
+- **Description**: User interface widget providing options to restart the game or exit.
+- **Usage**: Displayed on-screen to allow the player to restart the game or exit to the main menu.
+- **Implementation**: Inherits from UUserWidget, includes buttons for restarting and exiting, and methods for handling button clicks.
 
-## EnemyCharacter
-This codes is a child class of built in Character class that controls the Enemy, and Enemy looks for the target, rotates the orientation, then shoots the projectile
+## AVictoryBox
+- **Description**: Actor representing a victory box that triggers an event when overlapped by another actor.
+- **Usage**: Placed in the game environment to define victory conditions or events.
+- **Implementation**: Inherits from AActor, includes components for collision detection, and handles overlap events.
 
-_**AEnemyCharacter()**_: Initializes the eyes (where the projectile shoots from)
-
-_**BeginPlay()**_: Initializes the target (player)
-
-_**ThrowDodgeball()**_: Throws the dodgeball from eyes to last seen target's location
-
-_**Tick()**_: Every frame, track the player to where it is, and update if enemy can see the target
-
-## HealthComponent
-This tracks the HP of the player and functions around it such as losing health
-
-**LoseHealth(float Amount)**:
-  Amount: amount that loses health
-  the function makes whoever calls the function lose health
-
-## HealthInterface
-This is an Interface, meaning that other script is able to use this. 
-It has all the Health point related Interface such as OnDeath(), OnTakeDamage() the implementation of these are in 'DodgeballCharacter'
-
-## HUDWidget
-This updates the HP bar of the character
-
-_**UpdateHealthPercent(float HealthPercent)**_: updates the UI of health bar
-
-## LookAtActorComponent
-This class is a component which 'EnemyCharacter' has, it acts as an eye
-
-_**LookAtActor()**_: this function calls the 'CanSeeActor' from the eye of the enemy
-
-## MusicManager
-Manages background music of the game
-
-## RestartWidget
-This class is an UI once player dies, it allows player to restart or exit out of the game
-
-_**NativeOnInitialized()**_: it initializes clickable buttons 
-
-_**OnRestartClicked()**_: once player clicks on restart, the game restarts
-
-_**OnExitClicked()**_: once player clicks on quit, the game exits
-
-## VictoryBox
-This class acts as a goal that player must reach to
-
-_**AVictoryBox()**_: initalizes goal point, and the collision box
-
-_**OnBeginOverlap(UPrimitiveComponent OverlappedComp, AActor OtherActor, UPrimitiveComponent OtherComp, int32 OhterBodyIndex, bool bFromSweep, const FHitResult& SweepResult)**_:
-  On overlap of a player, the game ends
-
-## Wall
-Class that is a child of an built in Actor class, all its purpose is just a wall
+## AWall
+- **Description**: Actor representing a wall in the game environment.
+- **Usage**: Used to create barriers or boundaries within the game space.
+- **Implementation**: Inherits from AActor and includes a scene component for positioning and scaling.
