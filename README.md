@@ -4,7 +4,7 @@ Testing/Learning how to use UE5 with C++ classes
 A player has to dodge around the enemies' projectiles attempting to finish the maze
 
 ## Image of Gameplay
-### A map in the editor
+### A map in the editor (Level/Map is editable)
 ![image](https://github.com/hyeonukim/Dodgeball/assets/48634064/0178ddfd-cfe1-4c4a-bf53-62277a893f1d)
 
 ### In game screen
